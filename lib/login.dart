@@ -119,6 +119,7 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
+    // listarImoveis();
     return Scaffold(
       appBar: AppBar(
         title: Text('Gerenciador de imóveis')
