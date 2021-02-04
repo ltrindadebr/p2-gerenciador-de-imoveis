@@ -38,6 +38,22 @@ class _LoginState extends State<Login> {
     });
   }
 
+  List<Imovel> listaDeImoveis = List<Imovel>();
+
+  void listarImoveis() async {
+    List listImoveis = await _db.listarImoveis();
+    // print('Imoveis cadastrados: ' + listImoveis.toString());
+    List<Imovel> lista = List<Imovel>();
+    for(var item in listImoveis) {
+      Imovel i = Imovel.convertMAPToObject(item);
+      lista.add(i);
+    }
+
+    setState(() {
+      listaDeImoveis = lista;
+    });
+  }
+
   void imovelRegisterPage() {
     showDialog(
       context: context,
@@ -107,7 +123,24 @@ class _LoginState extends State<Login> {
       appBar: AppBar(
         title: Text('Gerenciador de imóveis')
       ),
-      body: Column(),
+      body: Column(
+        children: [
+          Expanded(
+            child: ListView.builder(
+              itemCount: listaDeImoveis.length,
+              itemBuilder: (context, index) {
+                final Imovel imovel = listaDeImoveis[index];
+                return Card(
+                  child: ListTile(
+                    title: Text(imovel.tipo + ' - ' + imovel.areatotal.toString() + 'm²'),
+                    subtitle: Text('Rua: ' + imovel.nomerua + ' nº ' + imovel.numero.toString() + '\nPreço: RS' + imovel.preco.toString()),
+                  ),
+                );
+              },
+            ),
+          )
+        ],
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           imovelRegisterPage();

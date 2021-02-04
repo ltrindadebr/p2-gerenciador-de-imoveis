@@ -42,4 +42,12 @@ class ImovelDao {
     var results = await db.insert('imoveis', imovel.convertObjectToMAP());
     return results;
   }
+
+  listarImoveis() async {
+    Database db = await this.database;
+    String query = 'SELECT * from imoveis';
+    List listaImoveis = await db.rawQuery(query);
+    return listaImoveis;
+  }
+
 }
