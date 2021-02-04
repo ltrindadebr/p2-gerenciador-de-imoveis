@@ -1,6 +1,9 @@
 // import 'dart:js';
 
 import 'package:flutter/material.dart';
+import 'package:prova_2/model/imovel.dart';
+
+import 'dao/imovelDao.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -8,13 +11,31 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  TextEditingController tipoController = TextEditingController();
   TextEditingController numeroController = TextEditingController();
   TextEditingController nomeRuaController = TextEditingController();
   TextEditingController areaTotalController = TextEditingController();
   TextEditingController precoController = TextEditingController();
 
+  ImovelDao _db = ImovelDao();
+
   void cadastrarImovel() {
-    
+    setState(() async {
+      Imovel imovel = Imovel(
+        tipoController.text,
+        int.parse(numeroController.text),
+        nomeRuaController.text,
+        int.parse(areaTotalController.text),
+        double.parse(precoController.text)
+      );
+
+      int results = await _db.inserirImovel(imovel);
+      if (results != null) {
+        print('Imóvel cadastrado com sucesso.');
+      } else {
+        print('Falha ao cadastrar imóvel.');
+      }
+    });
   }
 
   void imovelRegisterPage() {
