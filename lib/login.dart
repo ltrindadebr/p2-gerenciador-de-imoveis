@@ -1,155 +1,77 @@
-// import 'dart:js';
-
 import 'package:flutter/material.dart';
-import 'package:prova_2/model/imovel.dart';
-
-import 'dao/imovelDao.dart';
+import 'home.dart';
 
 class Login extends StatefulWidget {
   @override
-  _LoginState createState() => _LoginState();
+  LoginState createState() => LoginState();
 }
 
-class _LoginState extends State<Login> {
-  TextEditingController tipoController = TextEditingController();
-  TextEditingController numeroController = TextEditingController();
-  TextEditingController nomeRuaController = TextEditingController();
-  TextEditingController areaTotalController = TextEditingController();
-  TextEditingController precoController = TextEditingController();
+class LoginState extends State<Login> {
+  TextEditingController loginController = TextEditingController();
+  TextEditingController senhaController = TextEditingController();
 
-  ImovelDao _db = ImovelDao();
+  String loginMessage = "";
 
-  void cadastrarImovel() {
-    setState(() async {
-      Imovel imovel = Imovel(
-        tipoController.text,
-        int.parse(numeroController.text),
-        nomeRuaController.text,
-        int.parse(areaTotalController.text),
-        double.parse(precoController.text)
+  void fazerLogin() {
+    if (loginController.text == 'Leonardo' && senhaController.text == '201721275') {
+      // print('Login efetuado com sucesso');
+      setState(() {
+        loginMessage = '';
+      });
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => Home())
       );
-
-      int results = await _db.inserirImovel(imovel);
-      if (results != null) {
-        print('Imóvel cadastrado com sucesso.');
-      } else {
-        print('Falha ao cadastrar imóvel.');
-      }
-    });
-  }
-
-  List<Imovel> listaDeImoveis = List<Imovel>();
-
-  void listarImoveis() async {
-    List listImoveis = await _db.listarImoveis();
-    // print('Imoveis cadastrados: ' + listImoveis.toString());
-    List<Imovel> lista = List<Imovel>();
-    for(var item in listImoveis) {
-      Imovel i = Imovel.convertMAPToObject(item);
-      lista.add(i);
+    } else {
+      // print('Falha ao entrar: login ou senha incorretos.');
+      setState(() {
+        loginMessage = 'Login ou senha incorretos.';
+      });
     }
-
-    setState(() {
-      listaDeImoveis = lista;
-    });
-  }
-
-  void imovelRegisterPage() {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text("Cadastrar imóvel"),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-
-              TextFormField(
-                decoration: InputDecoration(
-                  labelText: 'Número:',
-                  hintText: 'Insira o número do imóvel',
-                ),
-                controller: numeroController,
-              ),
-
-              TextFormField(
-                decoration: InputDecoration(
-                  labelText: 'Endereço:',
-                  hintText: 'Insira o nome da rua do imóvel',
-                ),
-                controller: nomeRuaController,
-              ),
-
-              TextFormField(
-                decoration: InputDecoration(
-                  labelText: 'Área:',
-                  hintText: 'Insira a área total do imóvel',
-                ),
-                controller: areaTotalController,
-              ),
-
-              TextFormField(
-                decoration: InputDecoration(
-                  labelText: 'Preço:',
-                  hintText: 'Insira o preço do imóvel',
-                ),
-                controller: precoController,
-              )
-
-            ],
-          ),
-          actions: [
-            FlatButton(
-              child: Text("Cancelar"),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            ),
-            FlatButton(
-              child: Text("Cadastrar"),
-              onPressed: () {
-                cadastrarImovel();
-              },
-            ),
-          ],
-        );
-      }
-    );
   }
 
   @override
   Widget build(BuildContext context) {
-    // listarImoveis();
     return Scaffold(
       appBar: AppBar(
-        title: Text('Gerenciador de imóveis')
+        title: Text('Login'),
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: ListView.builder(
-              itemCount: listaDeImoveis.length,
-              itemBuilder: (context, index) {
-                final Imovel imovel = listaDeImoveis[index];
-                return Card(
-                  child: ListTile(
-                    title: Text(imovel.tipo + ' - ' + imovel.areatotal.toString() + 'm²'),
-                    subtitle: Text('Rua: ' + imovel.nomerua + ' nº ' + imovel.numero.toString() + '\nPreço: RS' + imovel.preco.toString()),
-                  ),
-                );
-              },
+      body: Padding(
+        padding: const EdgeInsets.all(50.0),
+        child: Column(
+          children: <Widget> [
+            TextFormField(
+              decoration: InputDecoration(
+                labelText: 'Login:',
+                hintText: 'Insira o número do imóvel',
+                border: OutlineInputBorder()
+              ),
+              controller: loginController,
             ),
-          )
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          imovelRegisterPage();
-        },
-        child: Icon(Icons.add)
-      ),
-
+            Divider(),
+            TextFormField(
+              decoration: InputDecoration(
+                labelText: 'Senha:',
+                hintText: 'Insira a sua senha',
+                border: OutlineInputBorder()
+              ),
+              keyboardType: TextInputType.number,
+              controller: senhaController,
+            ),
+            Divider(),
+            RaisedButton(
+              onPressed: () {
+                fazerLogin();
+              },
+              child: Text('Entrar')
+            ),
+            Text(
+              loginMessage, 
+              style: TextStyle(fontSize: 14, color: Colors.redAccent),
+            ),
+          ],
+        )
+      )
     );
   }
 }
-
