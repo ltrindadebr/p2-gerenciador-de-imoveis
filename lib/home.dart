@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'pages/cadastro.dart';
 import 'pages/listar.dart';
+import 'pages/editarOuDeletar.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -9,9 +10,6 @@ class Home extends StatefulWidget {
 }
 
 class HomeState extends State<Home> {
-  void fazerLogin() {
-    
-  }
   void cadastrarImovel() {
     Navigator.push(
       context,
@@ -22,6 +20,13 @@ class HomeState extends State<Home> {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => Listar())
+    );
+  }
+
+  void editarOuExcluirImoveis() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => EditarOuDeletar())
     );
   }
 
@@ -78,15 +83,9 @@ class HomeState extends State<Home> {
             ),
             RaisedButton(
               onPressed: () {
-                fazerLogin();
+                editarOuExcluirImoveis();
               },
-              child: Text('Editar imóveis')
-            ),
-            RaisedButton(
-              onPressed: () {
-                fazerLogin();
-              },
-              child: Text('Excluir imóveis')
+              child: Text('Editar ou Excluir imóveis')
             ),
             Divider(),
             RaisedButton(
