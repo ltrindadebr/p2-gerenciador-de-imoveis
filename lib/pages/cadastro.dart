@@ -40,7 +40,7 @@ class CadastroState extends State<Cadastro> {
           tipoController.text,
           int.parse(numeroController.text),
           nomeRuaController.text,
-          int.parse(areaTotalController.text),
+          double.parse(areaTotalController.text),
           double.parse(precoController.text)
         );
 
@@ -96,7 +96,7 @@ class CadastroState extends State<Cadastro> {
               ),
               controller: nomeRuaController,
             ),
-          Divider(),
+            Divider(),
             TextFormField(
               decoration: InputDecoration(
                 labelText: 'Área:',

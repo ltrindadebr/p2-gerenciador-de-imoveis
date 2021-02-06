@@ -3,7 +3,7 @@ class Imovel {
   String _tipo;
   int _numero;
   String _nomerua;
-  int _areatotal;
+  double _areatotal;
   double _preco;
   
   // ID
@@ -23,8 +23,8 @@ class Imovel {
   set nomerua(String value) => _nomerua = value;
 
   // AREA TOTAL
-  int get areatotal => _areatotal;
-  set areatotal(int value) => _areatotal = value;
+  double get areatotal => _areatotal;
+  set areatotal(double value) => _areatotal = value;
 
   // PRECO
   double get preco => _preco;

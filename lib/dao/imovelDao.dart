@@ -19,7 +19,7 @@ class ImovelDao {
   }
 
   Future<Database> get database async {
-    if (_databaseDao == null) {
+    if (_database == null) {
       _database = await createDatabase();
     }
     return _database;
@@ -31,7 +31,7 @@ class ImovelDao {
   }
 
   Future<Database> createDatabase() async {
-    Directory folder = await getApplicationDocumentsDirectory();
+    Directory folder = await getApplicationSupportDirectory();
     String path = folder.path + 'baseimoveis.bd';
     var db = await openDatabase(path, version: 1, onCreate: createTables);
     return db;

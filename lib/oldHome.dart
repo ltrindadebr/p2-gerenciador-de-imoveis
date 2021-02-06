@@ -25,7 +25,7 @@ class _HomeState extends State<Home> {
         tipoController.text,
         int.parse(numeroController.text),
         nomeRuaController.text,
-        int.parse(areaTotalController.text),
+        double.parse(areaTotalController.text),
         double.parse(precoController.text)
       );
 

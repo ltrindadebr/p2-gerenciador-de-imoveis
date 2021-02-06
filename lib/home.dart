@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'pages/cadastro.dart';
+import 'pages/listar.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -14,6 +15,12 @@ class HomeState extends State<Home> {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => Cadastro())
+    );
+  }
+  void listarImoveis(){
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => Listar())
     );
   }
 
@@ -36,7 +43,7 @@ class HomeState extends State<Home> {
             ),
             RaisedButton(
               onPressed: () {
-                fazerLogin();
+                listarImoveis();
               },
               child: Text('Listar imóveis')
             ),
