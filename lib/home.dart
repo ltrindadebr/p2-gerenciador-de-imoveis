@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'pages/cadastro.dart';
 import 'pages/listar.dart';
 
@@ -21,6 +22,34 @@ class HomeState extends State<Home> {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => Listar())
+    );
+  }
+
+  void exibirSobre() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text("Sobre"),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                'Desenvolvido por:\nLeonardo Trindade', 
+                style: TextStyle(fontSize: 14, color: Colors.black),
+              ),
+            ],
+          ),
+          actions: [
+            FlatButton(
+              child: Text("Confirmar"),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        );
+      }
     );
   }
 
@@ -60,6 +89,18 @@ class HomeState extends State<Home> {
               child: Text('Excluir imóveis')
             ),
             Divider(),
+            RaisedButton(
+              onPressed: () {
+                exibirSobre();
+              },
+              child: Text('Sobre')
+            ),
+            RaisedButton(
+              onPressed: () {
+                SystemNavigator.pop();
+              },
+              child: Text('Sair')
+            ),
           ],
         )
       )
