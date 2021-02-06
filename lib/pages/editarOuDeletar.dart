@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:prova_2/model/imovel.dart';
 import '../dao/imovelDao.dart';
+// import './cadastro.dart';
 
 class EditarOuDeletar extends StatefulWidget {
   @override
@@ -8,6 +9,12 @@ class EditarOuDeletar extends StatefulWidget {
 }
 
 class EditarOuDeletarState extends State<EditarOuDeletar> {
+  TextEditingController tipoController = TextEditingController();
+  TextEditingController numeroController = TextEditingController();
+  TextEditingController nomeRuaController = TextEditingController();
+  TextEditingController areaTotalController = TextEditingController();
+  TextEditingController precoController = TextEditingController();
+
   ImovelDao _db = ImovelDao();
 
   List<Imovel> listaDeImoveis = List<Imovel>();
@@ -54,9 +61,80 @@ class EditarOuDeletarState extends State<EditarOuDeletar> {
     );
   }
 
-  editarImovel(Imovel cli) {
-
+  editarImovel(Imovel imovel) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text("Editar imóvel"),
+          content: Column(
+            mainAxisSize: MainAxisSize.min, //tamanho da janela
+            children: [
+              TextFormField(
+              decoration: InputDecoration(
+                labelText: 'Tipo:',
+                hintText: 'Insira o número do imóvel',
+                border: OutlineInputBorder()
+              ),
+              controller: tipoController,
+              ),
+              Divider(),
+              TextFormField(
+                decoration: InputDecoration(
+                  labelText: 'Número:',
+                  hintText: 'Insira o número do imóvel',
+                  border: OutlineInputBorder()
+                ),
+                controller: numeroController,
+              ),
+              Divider(),
+              TextFormField(
+                decoration: InputDecoration(
+                  labelText: 'Endereço:',
+                  hintText: 'Insira o nome da rua do imóvel',
+                  border: OutlineInputBorder()
+                ),
+                controller: nomeRuaController,
+              ),
+              Divider(),
+              TextFormField(
+                decoration: InputDecoration(
+                  labelText: 'Área:',
+                  hintText: 'Insira a área total do imóvel',
+                  border: OutlineInputBorder()
+                ),
+                controller: areaTotalController,
+              ),
+              Divider(),
+              TextFormField(
+                decoration: InputDecoration(
+                  labelText: 'Preço:',
+                  hintText: 'Insira o preço do imóvel',
+                  border: OutlineInputBorder()
+                ),
+                controller: precoController,
+              ),
+            ]
+          ),
+          actions: [
+            FlatButton(
+              onPressed: (){
+                Navigator.pop(context);
+              }, 
+              child: Text("Cancelar")
+            ),
+            FlatButton(
+              onPressed: (){
+                Navigator.pop(context);
+              }, 
+              child: Text("Salvar")
+            )
+          ],
+        );
+      }
+    );
   }
+  
 
   @override
   Widget build(BuildContext context) {
