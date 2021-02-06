@@ -50,4 +50,21 @@ class ImovelDao {
     return listaImoveis;
   }
 
+  Future<int> excluirImovel(int id) async {
+    Database db = await this.database;
+    var result = await db.delete('imoveis', where: 'id=?', whereArgs: [id]);
+    return result;
+  }
+
+  Future<int> editarImovel(Imovel imovel) async {
+    Database db = await this.database;
+    var result = await db.update(
+      'imoveis', 
+      imovel.convertObjectToMAP(),
+      where:'id=?',
+      whereArgs: [imovel.id]
+    );
+    return result;
+  }
+
 }
